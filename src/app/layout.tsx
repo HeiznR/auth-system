@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  dehydratedState, // <-- Передаем состояние
+  dehydratedState,
 }: Readonly<{
   children: React.ReactNode;
   dehydratedState?: unknown;
@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReactQueryProvider dehydratedState={dehydratedState}>
-          {children}
+          <ChakraUIProvider>{children}</ChakraUIProvider>
         </ReactQueryProvider>
       </body>
     </html>
