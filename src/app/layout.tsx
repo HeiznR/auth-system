@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-
 import "./globals.css";
-import { Provider } from "@/components/ui/provider";
+import { ChakraUIProvider } from "@/providers/ChakraUIProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,15 +21,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  dehydratedState, // <-- Передаем состояние
 }: Readonly<{
   children: React.ReactNode;
+  dehydratedState?: unknown;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Provider>{children}</Provider>
+        <ReactQueryProvider dehydratedState={dehydratedState}>
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );
