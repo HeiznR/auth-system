@@ -1,15 +1,21 @@
-import { Button, ConditionalValue, HStack } from "@chakra-ui/react";
+import { Button, chakra, ConditionalValue, HStack } from "@chakra-ui/react";
 
 export const ButtonUI = ({
   size,
   label,
   callback,
+  icon,
+  variant,
 }: {
   size: ConditionalValue<
     "sm" | "md" | "lg" | "xl" | "2xl" | "2xs" | "xs" | undefined
   >;
   label: string;
   callback: () => void;
+  icon?: any;
+  variant?: ConditionalValue<
+    "outline" | "solid" | "subtle" | "surface" | "ghost" | "plain" | undefined
+  >;
 }) => {
   return (
     <HStack wrap="wrap" pt="5">
@@ -18,8 +24,9 @@ export const ButtonUI = ({
         w="100%"
         size={size}
         colorPalette={"blue"}
-        variant="outline"
+        variant={variant}
       >
+        {icon ? icon : null}
         {label}
       </Button>
     </HStack>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ChakraUIProvider } from "@/providers/ChakraUIProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider dehydratedState={dehydratedState}>
-          <ChakraUIProvider>{children}</ChakraUIProvider>
-        </ReactQueryProvider>
+        <GoogleOAuthProvider clientId="test">
+          <ReactQueryProvider dehydratedState={dehydratedState}>
+            <ChakraUIProvider>{children}</ChakraUIProvider>
+          </ReactQueryProvider>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

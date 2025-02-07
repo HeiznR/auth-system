@@ -5,6 +5,11 @@ import { ButtonUI } from "../ui/button";
 import { InputUI } from "../ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signup } from "@/api/signup";
+import { LinkBoxUI } from "../ui/linkBox";
+import { HStack, Separator, Stack, Text } from "@chakra-ui/react";
+import { useGoogleLogin } from "@react-oauth/google";
+import { RiGoogleFill } from "react-icons/ri";
+import "./style.css";
 
 type TAuth = {
   email: string;
@@ -12,15 +17,16 @@ type TAuth = {
 };
 
 export default function Auth() {
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
+  });
   const [form, setForm] = useState<TAuth>({ email: "", password: "" });
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
     mutationFn: signup,
     mutationKey: ["signup"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["signup"] });
-      console.log("success");
     },
   });
 
@@ -31,6 +37,7 @@ export default function Auth() {
     }));
   };
 
+  //mock data
   const sendForm = () => {
     mutation.mutate({
       name: "Uladzislau",
@@ -40,16 +47,8 @@ export default function Auth() {
   };
 
   return (
-    <div
-      style={{
-        width: "500px",
-        height: "auto",
-        borderRadius: "40px",
-        boxShadow: "0 0 10px 0px silver",
-        padding: "30px",
-      }}
-    >
-      <BoxUI label="Sign in to your account" />
+    <div className="wrapper">
+      <BoxUI label="Log in" />
       <InputUI
         label="Email address"
         name={"email"}
@@ -63,6 +62,21 @@ export default function Auth() {
         callback={handleFormInputs}
       />
       <ButtonUI callback={sendForm} label="Send" size="md" />
+      <LinkBoxUI />
+      <HStack>
+        <Separator flex="1" />
+        <Text flexShrink="0" color={"black"}>
+          Or
+        </Text>
+        <Separator flex="1" />
+      </HStack>
+      <ButtonUI
+        callback={() => login()}
+        label="Sign in with Google 🚀"
+        size="md"
+        icon={<RiGoogleFill />}
+        variant={"outline"}
+      />
     </div>
   );
 }
