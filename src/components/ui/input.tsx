@@ -1,16 +1,18 @@
 import { Box, Field, Input, defineStyle } from "@chakra-ui/react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, HTMLInputTypeAttribute } from "react";
 
 export const InputUI = ({
   label,
   name,
   callback,
   value,
+  inputType = "text",
 }: {
   label: string;
   name: string;
   value: any;
   callback: (input: { [key: string]: string }) => void;
+  inputType?: HTMLInputTypeAttribute;
 }) => {
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     callback({ [name]: e.target.value });
@@ -18,7 +20,12 @@ export const InputUI = ({
   return (
     <Field.Root pt="5">
       <Box pos="relative" w="full">
-        <Input value={value} onChange={(e) => handleInput(e)} color="black" />
+        <Input
+          type={inputType}
+          value={value}
+          onChange={(e) => handleInput(e)}
+          color="black"
+        />
         <Field.Label css={floatingStyles}>{label}</Field.Label>
       </Box>
     </Field.Root>
