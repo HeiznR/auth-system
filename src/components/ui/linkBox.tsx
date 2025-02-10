@@ -4,10 +4,12 @@ export const LinkBoxUI = ({
   label,
   linkLabel,
   callback,
+  href,
 }: {
   label: string;
   linkLabel: string;
   callback: () => void;
+  href: "login" | "signup";
 }) => {
   return (
     <LinkBox as="article" p="5" rounded="md" textAlign={"center"}>
@@ -15,7 +17,7 @@ export const LinkBoxUI = ({
         {label}
         <Link
           onClick={() => callback()}
-          href="#inner-link"
+          href={href}
           variant="underline"
           colorPalette="teal"
         >

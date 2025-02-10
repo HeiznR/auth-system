@@ -1,10 +1,10 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BoxUI } from "../ui/box";
 import { ButtonUI } from "../ui/button";
 import { InputUI } from "../ui/input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { signup } from "@/api/signup";
+import { signupJWT, loginJWT } from "@/api/authFetch";
 import { LinkBoxUI } from "../ui/linkBox";
 import { HStack, Separator, Text } from "@chakra-ui/react";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -17,25 +17,35 @@ type TForm = {
   confirmPassword: string;
 };
 
-enum AuthTypes {
+export enum AuthTypes {
   LOGIN = "login",
   SIGNUP = "signup",
 }
 
-export default function Auth() {
+const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+export default function Auth({ type }: { type: "login" | "signup" }) {
   const queryClient = useQueryClient();
-  const [authType, setAuthType] = useState<AuthTypes>(AuthTypes.SIGNUP);
+  const [authType, setAuthType] = useState<"login" | "signup">(type);
   const [error, setError] = useState<null | string>(null);
   const [form, setForm] = useState<TForm>({
     email: "",
     password: "",
     confirmPassword: "",
   });
-  const mutation = useMutation({
-    mutationFn: signup,
-    mutationKey: ["auth"],
+
+  const signup = useMutation({
+    mutationFn: signupJWT,
+    mutationKey: ["signup"],
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth"] });
+      queryClient.invalidateQueries({ queryKey: ["signup"] });
+    },
+  });
+  const mlogin = useMutation({
+    mutationFn: loginJWT,
+    mutationKey: ["login"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["login"] });
     },
   });
   //TODO: google auth
@@ -58,25 +68,39 @@ export default function Auth() {
   };
 
   const sendForm = () => {
-    if (authType !== AuthTypes.SIGNUP) return;
     const name = form.email.split("@")[0];
     const { email, password } = form;
-    mutation.mutate({ name, email, password });
+
+    if (!email.match(regex)) {
+      setError("Email is not correct");
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+
+      return;
+    }
+
+    authType === AuthTypes.SIGNUP
+      ? signup.mutate({ name, email, password })
+      : mlogin.mutate({ email, password });
   };
 
   //TODO: xss, email validation
 
   const validateForm = () => {
-    return (
-      Boolean(form.email && form.password && form.confirmPassword) && !error
-    );
+    return AuthTypes.SIGNUP === authType
+      ? Boolean(form.email && form.password && form.confirmPassword)
+      : Boolean(form.email && form.password);
   };
+  //useful for single page handling
+  // const toggleauthType = useCallback(() => {
+  //   setAuthType((prev) =>
+  //     prev === AuthTypes.LOGIN ? AuthTypes.SIGNUP : AuthTypes.LOGIN
+  //   );
+  //   setForm({ confirmPassword: "", email: "", password: "" });
+  //   setError(null);
+  // }, []);
 
-  const toggleauthType = useCallback(() => {
-    setAuthType((prev) =>
-      prev === AuthTypes.LOGIN ? AuthTypes.SIGNUP : AuthTypes.LOGIN
-    );
-  }, []);
   const authLabels = {
     email: "Email address",
     password: "Password",
@@ -127,9 +151,10 @@ export default function Auth() {
             inputType="password"
             callback={handleFormInputs}
           />
-          {error && <Text color="red.500">{error}</Text>}
         </>
       )}
+      {/* error display component */}
+      {error && <Text color="red.500">{error}</Text>}
       {/* send button */}
       <ButtonUI
         disabled={!validateForm()}
@@ -140,7 +165,8 @@ export default function Auth() {
       <LinkBoxUI
         label={authLabels[authType].AuthTypeswitch.text}
         linkLabel={authLabels[authType].AuthTypeswitch.link}
-        callback={toggleauthType}
+        callback={() => {}}
+        href={authType === AuthTypes.SIGNUP ? "login" : "signup"}
       />
       {/* separator */}
       <HStack>
