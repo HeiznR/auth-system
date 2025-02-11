@@ -1,4 +1,4 @@
-import { Button, chakra, ConditionalValue, HStack } from "@chakra-ui/react";
+import { Button, ConditionalValue, HStack } from "@chakra-ui/react";
 
 export const ButtonUI = ({
   size,

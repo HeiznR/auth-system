@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { BoxUI } from "../ui/box";
 import { ButtonUI } from "../ui/button";
 import { InputUI } from "../ui/input";
@@ -79,13 +79,14 @@ export default function Auth({ type }: { type: "login" | "signup" }) {
 
       return;
     }
-
-    authType === AuthTypes.SIGNUP
-      ? signup.mutate({ name, email, password })
-      : mlogin.mutate({ email, password });
+    if (authType === AuthTypes.SIGNUP) {
+      signup.mutate({ name, email, password });
+    } else {
+      mlogin.mutate({ email, password });
+    }
   };
 
-  //TODO: xss, email validation
+  //TODO: xss,
 
   const validateForm = () => {
     return AuthTypes.SIGNUP === authType

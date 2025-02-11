@@ -1,4 +1,5 @@
-import { Link, LinkBox, Text } from "@chakra-ui/react";
+import { Link as LinkChakra, LinkBox, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
 export const LinkBoxUI = ({
   label,
@@ -15,14 +16,13 @@ export const LinkBoxUI = ({
     <LinkBox as="article" p="5" rounded="md" textAlign={"center"}>
       <Text color="fg.muted">
         {label}
-        <Link
+        <LinkChakra
           onClick={() => callback()}
-          href={href}
           variant="underline"
           colorPalette="teal"
         >
-          {linkLabel}
-        </Link>
+          <Link href={href}> {linkLabel}</Link>
+        </LinkChakra>
       </Text>
     </LinkBox>
   );

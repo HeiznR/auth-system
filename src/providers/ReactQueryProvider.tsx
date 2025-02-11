@@ -9,7 +9,7 @@ import {
 
 interface ReactQueryProviderProps {
   children: ReactNode;
-  dehydratedState?: unknown; // <-- Добавляем поддержку состояния
+  dehydratedState?: any;
 }
 
 export default function ReactQueryProvider({

@@ -22,10 +22,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  dehydratedState,
 }: Readonly<{
   children: React.ReactNode;
-  dehydratedState?: unknown;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -33,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <GoogleOAuthProvider clientId="test">
-          <ReactQueryProvider dehydratedState={dehydratedState}>
+          <ReactQueryProvider>
             <ChakraUIProvider>{children}</ChakraUIProvider>
           </ReactQueryProvider>
         </GoogleOAuthProvider>
