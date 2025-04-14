@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { BoxUI } from "../ui/box";
-import { ButtonUI } from "../ui/button";
-import { InputUI } from "../ui/input";
+import { BoxUI } from "../box";
+import { ButtonUI } from "../button";
+import { InputUI } from "../input";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signupJWT, loginJWT } from "@/api/authFetch";
-import { LinkBoxUI } from "../ui/linkBox";
+import { LinkBoxUI } from "../linkBox";
 import { HStack, Separator, Text } from "@chakra-ui/react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { RiGoogleFill } from "react-icons/ri";
@@ -51,6 +51,7 @@ export default function Auth({ type }: { type: "login" | "signup" }) {
   //TODO: google auth
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => console.log(tokenResponse),
+    flow: "auth-code",
   });
 
   const handleFormInputs = (inputData: Partial<TForm>) => {

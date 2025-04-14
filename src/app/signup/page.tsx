@@ -1,5 +1,5 @@
-import Auth from "@/components/auth/auth";
-import { CenterUI } from "@/components/ui/center";
+import Auth from "@/app/ui/auth/auth";
+import { CenterUI } from "@/app/ui/center";
 
 export default async function Home() {
   return (

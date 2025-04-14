@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export const CenterUI = ({ children }: { children: ReactNode }) => {
   return (
-    <AbsoluteCenter p="4" color="white" axis="both">
+    <AbsoluteCenter p="4" color="black" axis="both">
       {children}
     </AbsoluteCenter>
   );

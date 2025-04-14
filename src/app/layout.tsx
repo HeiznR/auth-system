@@ -4,6 +4,8 @@ import "./globals.css";
 import { ChakraUIProvider } from "@/providers/ChakraUIProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { inter } from "@/app/ui/fonts";
+import Header from "./ui/header/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,11 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
       >
-        <GoogleOAuthProvider clientId="test">
+        <GoogleOAuthProvider clientId="120412080798-lriq928ma6ovhe6glhqqj200rrjt8s32.apps.googleusercontent.com">
           <ReactQueryProvider>
-            <ChakraUIProvider>{children}</ChakraUIProvider>
+            <ChakraUIProvider>
+              <>
+                <Header />
+                {children}
+              </>
+            </ChakraUIProvider>
           </ReactQueryProvider>
         </GoogleOAuthProvider>
       </body>
