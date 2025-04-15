@@ -125,70 +125,71 @@ export default function Auth({ type }: { type: "login" | "signup" }) {
   };
 
   return (
-    <div className="wrapper">
-      {/* header */}
-      <BoxUI label={authLabels[authType].header} />
-      {/* email adress */}
-      <InputUI
-        label={authLabels.email}
-        name={"email"}
-        value={form.email}
-        callback={handleFormInputs}
-      />
-      {/* password */}
-      <InputUI
-        label={authLabels.password}
-        name={"password"}
-        value={form.password}
-        inputType="password"
-        callback={handleFormInputs}
-      />
-      {authType === AuthTypes.SIGNUP && (
-        // confirm password
-        <>
-          <InputUI
-            label={authLabels.confirmPassword}
-            name={"confirmPassword"}
-            value={form.confirmPassword}
-            inputType="password"
-            callback={handleFormInputs}
-          />
-        </>
-      )}
-      {/* error display component */}
-      {error && <Text color="red.500">{error}</Text>}
-      {/* send button */}
-      <ButtonUI
-        disabled={!validateForm()}
-        callback={sendForm}
-        label="Send"
-        size="md"
-      />
-      <LinkBoxUI
-        label={authLabels[authType].AuthTypeswitch.text}
-        linkLabel={authLabels[authType].AuthTypeswitch.link}
-        callback={() => {}}
-        href={authType === AuthTypes.SIGNUP ? "login" : "signup"}
-      />
-      {/* separator */}
-      <HStack>
-        <Separator flex="1" />
-        <Text flexShrink="0" color={"black"}>
-          Or
-        </Text>
-        <Separator flex="1" />
-      </HStack>
-      {/* oauth */}
-      <div>
-        {/* google */}
-        <ButtonUI
-          callback={() => login()}
-          label={`${authLabels[authType].oauth.google} in with Google 🚀`}
-          size="md"
-          icon={<RiGoogleFill />}
-          variant={"outline"}
-        />
-      </div>
-    </div>
+    // <div className="wrapper">
+    //   {/* header */}
+    //   <BoxUI label={authLabels[authType].header} />
+    //   {/* email adress */}
+    //   <InputUI
+    //     label={authLabels.email}
+    //     name={"email"}
+    //     value={form.email}
+    //     callback={handleFormInputs}
+    //   />
+    //   {/* password */}
+    //   <InputUI
+    //     label={authLabels.password}
+    //     name={"password"}
+    //     value={form.password}
+    //     inputType="password"
+    //     callback={handleFormInputs}
+    //   />
+    //   {authType === AuthTypes.SIGNUP && (
+    //     // confirm password
+    //     <>
+    //       <InputUI
+    //         label={authLabels.confirmPassword}
+    //         name={"confirmPassword"}
+    //         value={form.confirmPassword}
+    //         inputType="password"
+    //         callback={handleFormInputs}
+    //       />
+    //     </>
+    //   )}
+    //   {/* error display component */}
+    //   {error && <Text color="red.500">{error}</Text>}
+    //   {/* send button */}
+    //   <ButtonUI
+    //     disabled={!validateForm()}
+    //     callback={sendForm}
+    //     label="Send"
+    //     size="md"
+    //   />
+    //   <LinkBoxUI
+    //     label={authLabels[authType].AuthTypeswitch.text}
+    //     linkLabel={authLabels[authType].AuthTypeswitch.link}
+    //     callback={() => {}}
+    //     href={authType === AuthTypes.SIGNUP ? "login" : "signup"}
+    //   />
+    //   {/* separator */}
+    //   <HStack>
+    //     <Separator flex="1" />
+    //     <Text flexShrink="0" color={"black"}>
+    //       Or
+    //     </Text>
+    //     <Separator flex="1" />
+    //   </HStack>
+    //   {/* oauth */}
+    //   <div>
+    //     {/* google */}
+    //     <ButtonUI
+    //       callback={() => login()}
+    //       label={`${authLabels[authType].oauth.google} in with Google 🚀`}
+    //       size="md"
+    //       icon={<RiGoogleFill />}
+    //       variant={"outline"}
+    //     />
+    //   </div>
+    // </div>
+    <div>{"test"}</div>
   );
 }

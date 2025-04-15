@@ -5,7 +5,7 @@ export default async function Home() {
   return (
     <>
       <p className={`${lusitana.className}`}>testFont</p>
-      <CenterUI>{"main page"}</CenterUI>
+      <div>{"main page"}</div>
     </>
   );
 }

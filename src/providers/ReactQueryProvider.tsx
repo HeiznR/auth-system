@@ -2,10 +2,12 @@
 
 import { ReactNode, useState } from "react";
 import {
+  HydrationBoundary,
   QueryClient,
   QueryClientProvider,
-  HydrationBoundary,
 } from "@tanstack/react-query";
+import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
+import SafeThemeProvider from "./SafeThemeProvider";
 
 interface ReactQueryProviderProps {
   children: ReactNode;
@@ -20,7 +22,11 @@ export default function ReactQueryProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HydrationBoundary state={dehydratedState}>{children}</HydrationBoundary>
+      <HydrationBoundary state={dehydratedState}>
+        <ChakraProvider value={defaultSystem}>
+          <SafeThemeProvider>{children}</SafeThemeProvider>
+        </ChakraProvider>
+      </HydrationBoundary>
     </QueryClientProvider>
   );
 }
