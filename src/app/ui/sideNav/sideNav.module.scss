@@ -1,0 +1,9 @@
+.SideNav > *{
+    box-sizing: border-box;
+    padding: 10px;
+    cursor:pointer;
+
+}
+.SideNav > *:hover{
+    box-shadow: 0 1 red;
+}

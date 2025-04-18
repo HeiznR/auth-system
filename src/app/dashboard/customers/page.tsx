@@ -1,3 +1,5 @@
+import { CenterUI } from "@/app/ui/center";
+
 export default function Page() {
-  return <div>{"Customers page"}</div>;
+  return <CenterUI>{"Customers page"}</CenterUI>;
 }
