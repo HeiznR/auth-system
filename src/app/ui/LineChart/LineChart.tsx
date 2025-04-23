@@ -1,5 +1,7 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Suspense } from "react";
 import {
   LineChart as LineComp,
   Line,
@@ -9,23 +11,61 @@ import {
   Tooltip,
 } from "recharts";
 
-const data = [
-  { name: "Page A", uv: 400, pv: 2400, amt: 2300 },
-  { name: "Page B", uv: 500, pv: 2100, amt: 2700 },
-  { name: "Page C", uv: 480, pv: 2350, amt: 2900 },
-  { name: "Page D", uv: 580, pv: 2550, amt: 3300 },
-];
+import { LineChartSkeleton } from "./LineChart-skeleton";
 
-export default function LineChart() {
+const processChartData = (breeds: any) => {
+  return breeds.data.map((breed: any) => ({
+    name: breed.attributes.name,
+    life: breed.attributes.life.max,
+    weight: breed.attributes.female_weight.max,
+  }));
+};
+
+export function ChartData({ fetchFunction }: any) {
+  const { data: breeds } = useSuspenseQuery({
+    queryKey: ["breeds"],
+    queryFn: fetchFunction,
+  });
+  const chartData = processChartData(breeds);
   return (
-    <LineComp width={400} height={400} data={data}>
-      <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-      <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-      <Line type="monotone" dataKey="amt" stroke="#8884d8" />
+    <LineComp
+      width={1000}
+      height={400}
+      style={{
+        border: "1px solid black",
+        borderRadius: "5px",
+        padding: "15px",
+      }}
+      data={chartData}
+    >
+      <Line type="monotone" dataKey="life" stroke="#8884d8" />
+      <Line type="monotone" dataKey="weight" stroke="#82ca9d" />
       <CartesianGrid stroke="#ccc" />
       <XAxis dataKey="name" />
       <YAxis />
       <Tooltip />
     </LineComp>
+  );
+}
+
+export function Wrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ width: "auto", height: "auto", padding: "20px" }}>
+      {children}
+    </div>
+  );
+}
+
+export function LineChart({ fetchFunction }: any) {
+  return (
+    <Suspense
+      fallback={
+        <Wrapper>
+          <LineChartSkeleton />
+        </Wrapper>
+      }
+    >
+      <ChartData fetchFunction={fetchFunction} />
+    </Suspense>
   );
 }

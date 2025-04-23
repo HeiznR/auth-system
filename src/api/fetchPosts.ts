@@ -5,10 +5,22 @@ interface Post {
   body: string;
 }
 
-export const fetchPosts = async (): Promise<Post[] | Post> => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts`);
+export const fetchBreeds = async (): Promise<any> => {
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  const res = await fetch(`https://dogapi.dog/api/v2/breeds`);
   if (!res.ok) {
-    throw new Error("Ошибка сети");
+    throw new Error("error");
+  }
+  return res.json();
+};
+
+export const fetchFacts = async (): Promise<any> => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const res = await fetch(`https://dogapi.dog/api/v2/facts?limit=2`);
+  if (!res.ok) {
+    throw new Error("error");
   }
   return res.json();
 };
