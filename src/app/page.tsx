@@ -1,11 +1,24 @@
-import { CenterUI } from "@/app/ui/center";
-import { lusitana } from "@/app/ui/fonts";
+"use client";
+import Image from "next/image";
+import styles from "./page.module.css";
+import { Auth } from "@/components/Auth/Auth";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <>
-      <p className={`${lusitana.className}`}>testFont</p>
-      <div>{"main page"}</div>
-    </>
+    <div className={styles.page}>
+      <main className={styles.main}>
+        <Auth />
+      </main>
+      <footer className={styles.footer}>
+        <a
+          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />
+          Learn
+        </a>
+      </footer>
+    </div>
   );
 }

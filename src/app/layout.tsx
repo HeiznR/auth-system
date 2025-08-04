@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import { GoogleOAuthProvider } from "@react-oauth/google";
-import { inter } from "@/app/ui/fonts";
-import Header from "./ui/header/header";
-import SafeThemeProvider from "@/providers/SafeThemeProvider";
-import SideNav from "./ui/sideNav/sideNav";
+import { Header } from "@/components/Header/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,29 +24,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={inter.className} lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.className} antialiased`}
-      >
-        <GoogleOAuthProvider clientId="120412080798-lriq928ma6ovhe6glhqqj200rrjt8s32.apps.googleusercontent.com">
-          <ReactQueryProvider>
-            <SafeThemeProvider>
-              <div
-                style={{
-                  display: "flex",
-                  minHeight: "100vh",
-                  flexDirection: "column",
-                }}
-              >
-                <Header />
-                <div style={{ display: "flex", flex: "1" }}>
-                  <SideNav />
-                  <main style={{ flex: "1" }}>{children}</main>
-                </div>
-              </div>
-            </SafeThemeProvider>
-          </ReactQueryProvider>
-        </GoogleOAuthProvider>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <Header />
+        {children}
       </body>
     </html>
   );
