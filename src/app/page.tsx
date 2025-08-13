@@ -1,14 +1,13 @@
 "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { Auth } from "@/components/Auth/Auth";
+import { UserPage } from "@/presentation/user/UserPage";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Auth />
-      </main>
+      <main className={styles.main}></main>
+      <UserPage />
       <footer className={styles.footer}>
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
